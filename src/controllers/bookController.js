@@ -65,6 +65,7 @@ const createBooks = async function (req, res) {
 const getBooks = async function (req, res) {
     try {
         const data = req.query
+        
 
         const books = await bookModel.find({ $and: [data, { isDeleted: false }] }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).collation({ locale: "en" }).sort({ title: 1 })
 
@@ -92,8 +93,8 @@ const getBooksById = async function (req, res) {
         if (getBook.length == 0) {
             return res.status(404).send({ status: false, message: "no book exist with this id" })
         }
-        const reviewData = await reviewModel.find({ bookId: bookId, isDeleted: false })
-            .select({ bookId: 1, reviewedBy: 1, reviewedAt: 1, rating: 1, review: 1 })
+       // const reviewData = await reviewModel.find({ bookId: bookId, isDeleted: false })
+         //   .select({ bookId: 1, reviewedBy: 1, reviewedAt: 1, rating: 1, review: 1 })
 
         const newData = {
             _id: getBook[0]._id,
@@ -106,7 +107,7 @@ const getBooksById = async function (req, res) {
             isDeleted: getBook[0].isDeleted,
             deletedAt: getBook[0].deletedAt,
             releasedAt: getBook[0].releasedAt,
-            reviewsData: reviewData
+            //reviewsData: reviewData
         }
 
         return res.status(200).send({ status: true, message: 'Books list', data: newData })

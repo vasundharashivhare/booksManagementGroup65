@@ -6,7 +6,7 @@ const authentication = async function (req, res, next) {
         let token = req.headers["x-api-key"];
         if (!token) return res.status(400).send({ status: false, msg: "Token is not Found" })
 
-        let decodedtoken = jwt.verify(token, "Secret-Key")
+        let decodedtoken = jwt.verify(token, "Project-3/group65")
         if (!decodedtoken) return res.status(401).send({ status: false, msg: "token is invalid" })
         else next()
     }
@@ -21,7 +21,7 @@ const authentication = async function (req, res, next) {
 const authorisation = async (req, res, next) => {
 
     let token = req.headers["x-api-key"];
-    let decodedtoken = jwt.verify(token, "Secret-Key")
+    let decodedtoken = jwt.verify(token, "Project-3/group65")
         //Request Body
         if(decodedtoken.userId == req.body.userId) return next()
         else return res.status(401).send({ status: false, msg: "you are not authorised!!!" });

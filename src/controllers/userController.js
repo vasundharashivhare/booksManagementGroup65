@@ -76,8 +76,8 @@ const login = async function (req, res) {
 
         // -------------------Token Will be Generate After 1st Log In ---------------
         const token = jwt.sign({
-            userId: mailMatch._id.toString(), batch:"plutonium""Secret-Key"
-        }, , { expiresIn: "24h" });
+            userId: mailMatch._id.toString(), batch:"plutonium",
+        }, "Project-3/group65" ,{ expiresIn: "24h" });
 
         res.setHeader("x-api-key", "token");
         return res.status(200).send({ status: true, message: "You are successfully logged in", token })
