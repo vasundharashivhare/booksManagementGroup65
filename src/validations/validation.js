@@ -12,13 +12,12 @@ const validanumber = function (value) {
     }
 }
 
+const isRightFormatISBN = function (ISBN) {
+    return /^\+?([1-9]{3})\)?[-. ]?([0-9]{10})$/.test(ISBN);
+}
 
 const isValidObjectId = function (objectId) {
     return /^[0-9a-fA-F]{24}$/.test(objectId)
-}
-
-const isRightFormatReleasedAt = function (releasedAt) {
-    return /((\d{4}[\/-])(\d{2}[\/-])(\d{2}))/.test(releasedAt)
 }
 
 const isValidEmail = function (value)   {
@@ -26,5 +25,9 @@ const isValidEmail = function (value)   {
     else return false
 }
 
+const isRightFormatReleasedAt = function (releasedAt) {
+    return /((\d{4}[\/-])(\d{2}[\/-])(\d{2}))/.test(releasedAt)
+}
 
-module.exports={isValid,validanumber,isValidObjectId,isRightFormatReleasedAt,isValidEmail }
+
+module.exports={isValid,validanumber,isValidObjectId,isRightFormatReleasedAt,isValidEmail ,isRightFormatISBN,isRightFormatReleasedAt}

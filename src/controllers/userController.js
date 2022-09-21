@@ -1,6 +1,6 @@
 const userModel = require("../models/userModel");
 const jwt = require('jsonwebtoken')
-const {isValid,isRightFormatemail,validanumber ,isValidEmail }=require("../validations/validation")
+const {isValid,validanumber ,isValidEmail }=require("../validations/validation")
 
 
 const createUser = async function (req, res) {
@@ -8,7 +8,7 @@ const createUser = async function (req, res) {
         let data = req.body
         const { title, name, phone, email, password } = data;
 
-        // ------------------------ validation ends -------------------------------
+        // ------------------------ validation start -------------------------------
         if (Object.keys(data) == 0) { return res.status(400).send({ status: false, message: 'No data provided' }) }
 
         if (!isValid(title)) { return res.status(400).send({ status: false, message: 'Title is required' }) }
@@ -76,8 +76,8 @@ const login = async function (req, res) {
 
         // -------------------Token Will be Generate After 1st Log In ---------------
         const token = jwt.sign({
-            userId: mailMatch._id.toString(), batch:"plutonium"
-        }, "Secret-Key", { expiresIn: "24h" });
+            userId: mailMatch._id.toString(), batch:"plutonium""Secret-Key"
+        }, , { expiresIn: "24h" });
 
         res.setHeader("x-api-key", "token");
         return res.status(200).send({ status: true, message: "You are successfully logged in", token })

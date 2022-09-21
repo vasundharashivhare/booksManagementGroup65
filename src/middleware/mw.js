@@ -4,11 +4,11 @@ const bookModel = require("../models/bookModel")
 const authentication = async function (req, res, next) {
     try {
         let token = req.headers["x-api-key"];
-        if (!token) return res.status(400).send({ status: false, msg: "login is required" })
+        if (!token) return res.status(400).send({ status: false, msg: "Token is not Found" })
+
         let decodedtoken = jwt.verify(token, "Secret-Key")
         if (!decodedtoken) return res.status(401).send({ status: false, msg: "token is invalid" })
-
-        next()
+        else next()
     }
     catch (error) {
         console.log(error)
@@ -16,37 +16,28 @@ const authentication = async function (req, res, next) {
     }
 }
 
+         
 
-const authorisation = async function (req, res, next) {
-    try {
-        let token = req.headers["x-api-key"];
-        let decodedtoken = jwt.verify(token, "Secret-Key")
+const authorisation = async (req, res, next) => {
 
-        let toBeupdatedbookId = req.params.bookId
-        if (toBeupdatedbookId) {
+    let token = req.headers["x-api-key"];
+    let decodedtoken = jwt.verify(token, "Secret-Key")
+        //Request Body
+        if(decodedtoken.userId == req.body.userId) return next()
+        else return res.status(401).send({ status: false, msg: "you are not authorised!!!" });
 
-            let updatinguserId = await bookModel.find({ _id: toBeupdatedbookId }).select({ userId: 1, _id: 0 })
-            let userId = updatinguserId.map(x => x.userId)
-
-            let id = decodedtoken.userId
-            if (id != userId) return res.status(403).send({ status: false, msg: "You are not authorised to perform this task" })
-        }
-        else {
-            toBeupdatedbookId = req.body.userId
-            let id = decodedtoken.userId
-            console.log(toBeupdatedbookId)
-
-            if (id != toBeupdatedbookId) return res.status(403).send({ status: false, msg: 'You are not authorised to perform this task' })
-        }
-
-        next();
-    }
-    catch (error) {
-        console.log(error)
-        return res.status(500).send({ msg: error.message })
-    }
-}
-
+       
+      if (req.params.bookId) {
+        //Path Parameter
+        let requiredId = await bookModel.findOne({ _id: req.params.bookId }).select({ userId: 1, _id: 0 })
+        let userIdFromBook = requiredId.userId.toString()
+        if(decodedtoken.userId == req.params.bookId) return next()   //userIdFromBook
+        else return res.status(401).send({ status: false, msg: "Unauthorised!!!" });
+       }
+    req.loggedIn = decodedtoken.userId
+    return next()
+  
+      };
 
 
 module.exports.authentication = authentication;
