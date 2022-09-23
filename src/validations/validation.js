@@ -1,8 +1,17 @@
-const isValid = function (value) {
-    if (typeof (value) === undefined || typeof (value) === null) { return false }
-    if (value.trim().length == 0) { return false }
-    if (typeof (value) === "string" && value.trim().length > 0) { return true }
+
+
+
+const isValidObjectId1= function (value){
+    const ObjectId = mongoose.Types.ObjectId
+    return ObjectId.isValid(value)
 }
+
+isValid = function (value) {
+    if (typeof value === 'undefined' || value === null) return false
+    if (typeof value === 'string' && value.trim().length === 0) return false
+    return true;
+}
+
 
 const validanumber = function (value) {
     if (/[6789]{1}[0-9]{9}/.test(value)) {
@@ -30,4 +39,4 @@ const isRightFormatReleasedAt = function (releasedAt) {
 }
 
 
-module.exports={isValid,validanumber,isValidObjectId,isRightFormatReleasedAt,isValidEmail ,isRightFormatISBN,isRightFormatReleasedAt}
+module.exports={isValid,validanumber,isValidObjectId,isRightFormatReleasedAt,isValidEmail ,isRightFormatISBN,isRightFormatReleasedAt,isValidObjectId1 }

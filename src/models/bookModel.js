@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const bookSchema = new mongoose.Schema({
+const bookSchema = new mongoose.Schema({      
     title: {
         type: String,
         required: true,
@@ -9,7 +9,7 @@ const bookSchema = new mongoose.Schema({
         trim: true
     },
     excerpt: {
-        type: String,
+        type: String,     
         required: true,
         trim: true
     },
@@ -48,4 +48,6 @@ const bookSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('Books', bookSchema);
+module.exports = mongoose.model('Books', bookSchema);   // crete model = variable name + collection name
+
+// what is CORS policy: 

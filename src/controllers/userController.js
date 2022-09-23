@@ -39,7 +39,7 @@ const createUser = async function (req, res) {
         //-----------------validation ends ---------------------------------
 
         const newUser = await userModel.create(data);
-        return res.status(201).send({ status: true, message: 'User successfully created', data: newUser })
+        return res.status(201).send({ status: true, message: 'User created successfully ', data: newUser })
 
     }
     catch (error) {

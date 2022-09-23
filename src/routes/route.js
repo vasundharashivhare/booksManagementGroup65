@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserController = require("../controllers/userController");
 const BookController = require("../controllers/bookController");
+const ReviewController = require("../controllers/reviewController");
 const {authentication,authorisation}= require("../middleware/mw");
 
 
@@ -16,15 +17,15 @@ router.get("/books", authentication, BookController.getBooks);
 
 router.get("/books/:bookId", authentication, BookController.getBooksById);
 
-// router.put("/books/:bookId", mw.authentication, mw.authorisation, BookController.updateBooks);
+router.put("/books/:bookId", authentication,authorisation,  BookController.updateBooks);
 
-// router.delete("/books/:bookId", mw.authentication, mw.authorisation, BookController.deleteBooks);
+router.delete("/books/:bookId",authentication, authorisation, BookController.deleteBooks);
 
-// router.post("/books/:bookId/review", ReviewController.createReview);
+router.post("/books/:bookId/review", ReviewController.createReviews);
 
-// router.put("/books/:bookId/review/:reviewId", ReviewController.updateReview);
+router.put("/books/:bookId/review/:reviewId", ReviewController.updateReview);
 
-// router.delete("/books/:bookId/review/:reviewId", ReviewController.deleteReview);
+router.delete("/books/:bookId/review/:reviewId", ReviewController.deleteReview);
 
 
 
