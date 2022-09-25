@@ -5,6 +5,23 @@ const isValidObjectId1= function (value){
     const ObjectId = mongoose.Types.ObjectId
     return ObjectId.isValid(value)
 }
+const isValidRequestBody = function (requestBody) {
+    return Object.keys(requestBody).length > 0;
+};
+
+
+const isValidDate = function(date) {
+    if(typeof date != "string") return false
+    return moment(date, 'YYYY-MM-DD', true).isValid()
+}
+
+const isValidRating = function(rating){
+    if(rating < 1 || rating > 5){
+        return false
+    } return true
+}
+
+
 
 isValid = function (value) {
     if (typeof value === 'undefined' || value === null) return false
@@ -39,4 +56,4 @@ const isRightFormatReleasedAt = function (releasedAt) {
 }
 
 
-module.exports={isValid,validanumber,isValidObjectId,isRightFormatReleasedAt,isValidEmail ,isRightFormatISBN,isRightFormatReleasedAt,isValidObjectId1 }
+module.exports={isValid,validanumber,isValidObjectId,isRightFormatReleasedAt,isValidEmail ,isRightFormatISBN,isRightFormatReleasedAt,isValidObjectId1,isValidRating,isValidDate,isValidRequestBody }

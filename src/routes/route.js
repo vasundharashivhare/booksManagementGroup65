@@ -21,11 +21,22 @@ router.put("/books/:bookId", authentication,authorisation,  BookController.updat
 
 router.delete("/books/:bookId",authentication, authorisation, BookController.deleteBooks);
 
-router.post("/books/:bookId/review", ReviewController.createReviews);
+router.post("/books/:bookId/review", ReviewController.createReview);
 
 router.put("/books/:bookId/review/:reviewId", ReviewController.updateReview);
 
-router.delete("/books/:bookId/review/:reviewId", ReviewController.deleteReview);
+router.delete("/books/:bookId/review/:reviewId", ReviewController.deleteReviwsById);
+
+
+//--------------------- validation fon request params for rong path--------------------------
+
+//API for wrong route-Of-API
+router.all("/*", function (req, res) {
+    res.status(400).send({
+        status: false,
+        message: "Please provide some details in body"
+    })
+})
 
 
 

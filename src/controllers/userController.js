@@ -1,6 +1,6 @@
 const userModel = require("../models/userModel");
 const jwt = require('jsonwebtoken')
-const {isValid,validanumber ,isValidEmail }=require("../validations/validation")
+const { isValid, validanumber, isValidEmail } = require("../validations/validation")
 
 
 const createUser = async function (req, res) {
@@ -28,7 +28,7 @@ const createUser = async function (req, res) {
 
         if (!isValid(email)) { return res.status(400).send({ status: false, message: 'Email is required' }) }
 
-        if (!isValidEmail (email)) { return res.status(400).send({ status: false, message: 'Please provide a valid email' }) }
+        if (!isValidEmail(email)) { return res.status(400).send({ status: false, message: 'Please provide a valid email' }) }
 
         let isUniqueemail = await userModel.findOne({ email: email })
         if (isUniqueemail) { return res.status(400).send({ status: false, message: 'Email Id already exist' }) }
@@ -55,7 +55,7 @@ const login = async function (req, res) {
         const pass = req.body.password
         const data = req.body
 
-          // ------------------------ validation ends -------------------------------
+        // ------------------------ validation ends -------------------------------
         if (Object.keys(data) == 0) return res.status(400).send({ status: false, message: "No input provided" })
 
         if (!isValid(mail)) { return res.status(400).send({ status: false, message: "Email is required" }) }
@@ -76,8 +76,8 @@ const login = async function (req, res) {
 
         // -------------------Token Will be Generate After 1st Log In ---------------
         const token = jwt.sign({
-            userId: mailMatch._id.toString(), batch:"plutonium",
-        }, "Project-3/group65" ,{ expiresIn: "24h" });
+            userId: mailMatch._id.toString(), batch: "plutonium",
+        }, "Project-3/group65", { expiresIn: 60 * 60 });
 
         res.setHeader("x-api-key", "token");
         return res.status(200).send({ status: true, message: "You are successfully logged in", token })
